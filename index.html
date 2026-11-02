@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>İlkin və Samira Toy Dəvətnaməsi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Noto+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="chest-open.webp">
+<link rel="preload" as="image" href="plate.webp">
+<style>
+:root {
+  /* Layout: sticky stage (chest opens, rug rises to full screen), then calm sections divided by distinct kilim bands */
+  --night: #121218;
+  --navy: #1c1c24;
+  --cream: #f5efe4;
+  --paper: #f5efe4;
+  --sand: #ece3d3;
+  --ink: #26201d;
+  --red: #6b1d1d;
+  --gold: #b08d57;
+  --teal: #2f4a48;
+  --muted: #7a6c62;
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body: "Noto Sans", "Segoe UI", Arial, sans-serif;
+  --band-a: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='22' viewBox='0 0 36 22'%3E%3Crect width='36' height='22' fill='%231c1c24'/%3E%3Cpath d='M0 11h9M27 11h9' stroke='%23b08d57' stroke-width='1'/%3E%3Cpath d='M17 3h2v2h2v2h2v2h2v4h-2v2h-2v2h-2v2h-2v-2h-2v-2h-2v-2h-2v-4h2V7h2V5h2Z' fill='%23b08d57'/%3E%3Cpath d='M18 8 21 11 18 14 15 11Z' fill='%231c1c24'/%3E%3C/svg%3E");
+  --band-b: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23f5efe4'/%3E%3Cpath d='M0 13 8 4 16 13Z' fill='%236b1d1d'/%3E%3Ccircle cx='8' cy='11' r='1.2' fill='%23f5efe4'/%3E%3C/svg%3E");
+  --band-c: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='24' viewBox='0 0 44 24'%3E%3Crect width='44' height='24' fill='%23ece3d3'/%3E%3Crect x='16' y='6' width='12' height='12' fill='%236b1d1d'/%3E%3Crect x='16' y='6' width='12' height='12' fill='%236b1d1d' transform='rotate(45 22 12)'/%3E%3Crect x='19.5' y='9.5' width='5' height='5' fill='%23b08d57' transform='rotate(45 22 12)'/%3E%3Ccircle cx='0' cy='12' r='1.6' fill='%231c1c24'/%3E%3Ccircle cx='44' cy='12' r='1.6' fill='%231c1c24'/%3E%3C/svg%3E");
+  --band-d: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='18' viewBox='0 0 14 18'%3E%3Crect width='14' height='18' fill='%232f4a48'/%3E%3Cpath d='M0 7 7 2 14 7M0 16 7 11 14 16' fill='none' stroke='%23b08d57' stroke-width='1.3'/%3E%3C/svg%3E");
+  --band-e: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='18' viewBox='0 0 32 18'%3E%3Crect width='32' height='18' fill='%231c1c24'/%3E%3Cpath d='M8 3 14 9 8 15 2 9Z' fill='%23b08d57'/%3E%3Cpath d='M24 4 29 9 24 14 19 9Z' fill='none' stroke='%23b08d57' stroke-width='1.2'/%3E%3C/svg%3E");
+  --band-f: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20' viewBox='0 0 40 20'%3E%3Crect width='40' height='20' fill='%23f5efe4'/%3E%3Cpath d='M20 3 27 10 20 17 13 10Z' fill='%236b1d1d'/%3E%3Cpath d='M20 7 23 10 20 13 17 10Z' fill='%23f5efe4'/%3E%3Cpath d='M2 10h6l2-3M38 10h-6l-2 3' fill='none' stroke='%236b1d1d' stroke-width='1.3'/%3E%3C/svg%3E");
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--night);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ---------- Stage ---------- */
+.stage { height: 420vh; height: 420svh; position: relative; }
+.sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: #8a705e; }
+.dim { position: absolute; inset: 0; background: var(--night); opacity: 0; pointer-events: none; }
+.chest {
+  --W: min(140vw, 125vh);
+  position: absolute; left: 50%; top: 50%;
+  width: var(--W); height: calc(var(--W) / 1.5);
+  translate: -50% -53%;
+}
+.layer { position: absolute; inset: 0; will-change: transform, opacity; }
+.layer img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  display: block; user-select: none; -webkit-user-drag: none;
+}
+.layer img.backdrop { inset: auto; left: -100%; top: -100%; width: 300%; height: 300%; }
+.layer img.closed-rim { inset: auto; left: 15.625%; top: 47.85%; width: 69.01%; height: 3.125%; }
+.body-front { clip-path: polygon(16.9% 49.4%, 83% 49.4%, 83% 98%, 16.9% 98%); }
+.interior-shade {
+  position: absolute; inset: 0;
+  clip-path: polygon(21.6% 42.2%, 77.6% 42.2%, 81.9% 49.4%, 17.6% 49.4%);
+  background: linear-gradient(transparent 41%, rgba(25,12,5,.85) 42%, rgba(25,12,5,.5) 50%);
+}
+/* 3D lid: a real box hinged on the chest's back edge, textured from the photos */
+.lid3d { position: absolute; inset: 0; perspective-origin: 50% 39.65%; pointer-events: none; }
+.lidbox { position: absolute; transform-style: preserve-3d; transform-origin: 50% 0; }
+.face { position: absolute; left: 0; top: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; background-size: 100% 100%; --shade: 0; }
+.f-top { background-image: linear-gradient(rgba(26,13,6,var(--shade)), rgba(26,13,6,var(--shade))), url(lid-top.webp); }
+.f-inner { background-image: linear-gradient(rgba(26,13,6,var(--shade)), rgba(26,13,6,var(--shade))), url(lid-inner.webp); }
+.f-front { background-image: linear-gradient(rgba(26,13,6,var(--shade)), rgba(26,13,6,var(--shade))), url(lid-front.webp); transform-origin: 50% 0; }
+
+/* rug: a bendable WebGL cloth drawn between the chest's back and front layers */
+.rug-gl { position: absolute; left: 0; top: 0; pointer-events: none; display: block; }
+/* fallback when WebGL is unavailable */
+.rug {
+  position: absolute; left: 0; top: 0; width: 0; height: 0;
+  overflow: hidden; visibility: hidden;
+}
+.rug img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 44%; display: block; }
+/* framed stone backdrop: the border is sliced from the design so it fits any screen */
+.design-bg {
+  position: absolute; inset: 0; opacity: 0; pointer-events: none;
+  --bw: clamp(18px, min(6.6vw, 4.2vh), 46px);
+  border-style: solid;
+  border-width: calc(var(--bw) * .72) var(--bw) calc(var(--bw) * .78) var(--bw);
+  border-image: url(frame.webp) 62 82 67 87 / calc(var(--bw) * .72) var(--bw) calc(var(--bw) * .78) var(--bw) round;
+  background: #d9ccb6 url(stone.webp) center / cover no-repeat; background-clip: padding-box;
+}
+/* soft contact shadow under the rug; narrows while the rug turns */
+.rug-shadow { position: absolute; left: 0; top: 0; opacity: 0; pointer-events: none;
+  background: rgba(30,18,10,.55); border-radius: 2%; will-change: transform, opacity; }
+.hint, .hint2 {
+  position: absolute; left: 0; right: 0; bottom: 5vh; text-align: center;
+  font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: #fbf3e6;
+  text-shadow: 0 1px 4px rgba(0,0,0,.6); pointer-events: none;
+}
+.hint2 { color: #3a2a20; text-shadow: none; bottom: calc(clamp(18px, min(6.6vw, 4.2vh), 46px) * .78 + 8px); }
+.hint2::after { height: 22px; margin-top: 6px; }
+.hint2::after { background: linear-gradient(#3a2a20, transparent) !important; }
+.hint2 { opacity: 0; }
+.hint::after, .hint2::after {
+  content: ""; display: block; width: 1px; height: 36px; margin: 10px auto 0;
+  background: linear-gradient(#fbf3e6, transparent);
+  animation: drip 1.8s ease-in-out infinite;
+}
+@keyframes drip { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+/* ---------- Sections ---------- */
+.band { height: var(--h); background: var(--img) repeat-x center / auto var(--h); border-block: 1px solid var(--gold); }
+.band.a { --img: var(--band-a); --h: 22px; }
+.band.b { --img: var(--band-b); --h: 16px; }
+.band.c { --img: var(--band-c); --h: 24px; }
+.band.d { --img: var(--band-d); --h: 18px; }
+.band.e { --img: var(--band-e); --h: 18px; }
+.band.f { --img: var(--band-f); --h: 20px; }
+section.sec { position: relative; padding: 110px 22px; text-align: center; overflow: hidden; }
+.sec.cream { background: var(--cream); color: var(--ink); }
+.sec.paper { background: var(--paper); color: var(--ink); }
+.sec.sand { background: var(--sand); color: var(--ink); }
+.sec.navy { background: var(--navy); color: var(--cream); }
+.sec.red { background: var(--red); color: var(--cream); }
+.wrap { position: relative; max-width: 660px; margin: 0 auto; display: grid; gap: 20px; justify-items: center; }
+
+.label { margin: 0; font-size: 12px; font-weight: 500; letter-spacing: .34em; text-transform: uppercase; color: var(--red); }
+.navy .label, .red .label { color: var(--gold); }
+h2 {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(40px, 7vw, 64px); line-height: 1.05; margin: 0;
+  color: var(--ink); text-wrap: balance; letter-spacing: .01em;
+}
+.navy h2, .red h2 { color: var(--cream); }
+p { margin: 0; max-width: 58ch; }
+.lead { font-family: var(--font-display); font-style: italic; font-size: clamp(22px, 3.6vw, 28px); line-height: 1.5; color: #3a2c27; }
+.navy .lead, .red .lead { color: #eadfca; }
+
+.ornament { display: flex; align-items: center; gap: 14px; width: min(320px, 80%); }
+.ornament::before, .ornament::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+.ornament::after { background: linear-gradient(90deg, var(--gold), transparent); }
+.ornament svg { width: 30px; height: 30px; flex: none; }
+
+.names-hero { font-family: var(--font-display); font-weight: 600; font-size: clamp(52px, 10vw, 96px); line-height: 1; color: var(--red); letter-spacing: .02em; }
+.names-hero .amp { display: block; font-style: italic; font-weight: 500; font-size: .45em; color: var(--gold); margin: .2em 0; }
+
+/* framed card with stepped carpet corners */
+.frame {
+  position: relative; width: 100%; max-width: 520px; padding: 42px 28px;
+  border: 1px solid var(--gold); outline: 1px solid rgba(176,141,87,.45); outline-offset: 6px;
+  background: rgba(255,255,255,.35);
+}
+.navy .frame, .red .frame { background: rgba(255,255,255,.03); }
+.frame .corner { position: absolute; width: 26px; height: 26px; }
+.frame .corner svg { width: 100%; height: 100%; display: block; }
+.frame .tl { left: -14px; top: -14px; }
+.frame .tr { right: -14px; top: -14px; transform: scaleX(-1); }
+.frame .bl { left: -14px; bottom: -14px; transform: scaleY(-1); }
+.frame .br { right: -14px; bottom: -14px; transform: scale(-1); }
+
+.date-big { font-family: var(--font-display); font-weight: 600; font-size: clamp(30px, 5vw, 44px); line-height: 1.2; color: var(--cream); }
+.countdown { display: grid; grid-template-columns: repeat(4, minmax(64px, 104px)); gap: 12px; justify-content: center; }
+.cd { padding: 16px 6px 12px; border: 1px solid rgba(176,141,87,.55); position: relative; }
+.cd::before { content: ""; position: absolute; left: 50%; top: -5px; width: 8px; height: 8px; background: var(--gold); transform: translateX(-50%) rotate(45deg); }
+.cd b { display: block; font-family: var(--font-display); font-size: clamp(32px, 6vw, 46px); line-height: 1.05; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--cream); }
+.cd small { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+
+.timeline { list-style: none; margin: 0; padding: 0; width: 100%; max-width: 460px; text-align: left; position: relative; }
+.timeline::before { content: ""; position: absolute; left: 86px; top: 10px; bottom: 10px; width: 1px; background: rgba(107,29,29,.3); }
+.timeline li { display: grid; grid-template-columns: 70px 1fr; gap: 34px; padding: 14px 0; position: relative; align-items: baseline; }
+.timeline li::before { content: ""; position: absolute; left: 82px; top: 24px; width: 9px; height: 9px; background: var(--red); transform: rotate(45deg); box-shadow: 0 0 0 3px var(--paper); }
+.timeline time { font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--red); font-variant-numeric: tabular-nums; text-align: right; }
+.timeline span { font-size: 17px; }
+
+.venue { font-family: var(--font-display); font-size: 34px; font-weight: 600; line-height: 1.15; color: var(--ink); }
+.btn {
+  display: inline-block; padding: 13px 30px;
+  background: var(--red); color: var(--cream); border: 1px solid var(--red);
+  font: 500 14px var(--font-body); letter-spacing: .16em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; transition: background .2s, color .2s;
+}
+.btn:hover { background: transparent; color: var(--red); }
+.red .btn, .navy .btn { background: var(--gold); border-color: var(--gold); color: var(--night); }
+.red .btn:hover, .navy .btn:hover { background: transparent; color: var(--gold); }
+.btn:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+form { width: 100%; display: grid; gap: 12px; text-align: left; }
+form label, .field-title { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+input[type="text"], select {
+  width: 100%; padding: 12px 14px; font: 16px var(--font-body);
+  color: var(--cream); background: rgba(0,0,0,.18);
+  border: 1px solid rgba(176,141,87,.5); border-radius: 0;
+}
+input::placeholder { color: rgba(243,234,217,.5); }
+select option { color: #111; }
+.choice { display: flex; gap: 10px; flex-wrap: wrap; }
+.choice label { flex: 1; min-width: 140px; display: flex; gap: 8px; align-items: center; padding: 11px 14px; border: 1px solid rgba(176,141,87,.5); text-transform: none; letter-spacing: 0; font-size: 16px; color: var(--cream); cursor: pointer; }
+.choice input { accent-color: var(--gold); }
+form .btn { justify-self: center; margin-top: 8px; }
+.note { font-size: 14px; color: #eadfca; text-align: center; }
+.note a { margin-left: 8px; }
+
+footer { background: var(--navy); color: var(--cream); text-align: center; padding: 70px 20px 90px; position: relative; overflow: hidden; }
+footer .names { font-family: var(--font-display); font-size: 46px; font-weight: 600; color: var(--gold); line-height: 1.1; }
+footer p { margin: 10px auto 0; color: #cbbfa9; font-size: 15px; letter-spacing: .1em; }
+
+@media (max-width: 480px) {
+  section.sec { padding: 84px 18px; }
+  .countdown { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .timeline::before { left: 76px; }
+  .timeline li { grid-template-columns: 60px 1fr; gap: 30px; }
+  .timeline li::before { left: 72px; }
+}
+@media (prefers-reduced-motion: reduce) { .hint::after, .hint2::after { animation: none; } .btn { transition: none; } }
+</style>
+</head>
+<body>
+<!-- reusable motifs -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="star" viewBox="-15 -15 30 30">
+      <rect x="-9" y="-9" width="18" height="18" fill="#6b1d1d"/>
+      <rect x="-9" y="-9" width="18" height="18" fill="#6b1d1d" transform="rotate(45)"/>
+      <rect x="-5.5" y="-5.5" width="11" height="11" fill="#b08d57" transform="rotate(45)"/>
+      <rect x="-2.2" y="-2.2" width="4.4" height="4.4" fill="#f5efe4"/>
+    </symbol>
+    <symbol id="corner" viewBox="0 0 26 26">
+      <path d="M0 0h26v6h-6v6h-8v8H6v6H0Z" fill="#b08d57"/>
+      <path d="M3 3h6v6H3Z" fill="#6b1d1d"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main>
+  <section class="stage" aria-label="Sandıq açılır, içindən xalça çıxır">
+    <div class="sticky">
+      <div class="dim" id="dim"></div>
+      <div class="design-bg" id="designBg"></div>
+      <div class="chest" id="chest">
+        <div class="layer" id="back">
+          <img class="backdrop" src="backdrop.webp" alt="" draggable="false">
+          <img src="plate.webp" alt="" draggable="false">
+          <img src="chest-open.webp" alt="" draggable="false">
+          <div class="interior-shade" id="shade"></div>
+          <div class="lid3d" id="lid3d">
+            <div class="lidbox" id="lidbox">
+              <div class="face f-inner" id="fInner"></div>
+              <div class="face f-front" id="fFront"></div>
+              <div class="face f-top" id="fTop"></div>
+            </div>
+          </div>
+        </div>
+        <div class="rug-shadow" id="rugShadow"></div>
+        <canvas class="rug-gl" id="rugGL" aria-hidden="true"></canvas>
+        <div class="layer" id="front">
+          <img class="body-front" src="chest-open.webp" alt="" draggable="false">
+          <img class="closed-rim" id="rim" src="rim.webp" alt="" draggable="false">
+        </div>
+      </div>
+      <div class="rug" id="rug"><img src="rug.webp" alt="Xalça üzərində İlkin və Samira yazısı" draggable="false"></div>
+      <div class="hint" id="hint">Sandığı açmaq üçün aşağı sürüşdürün</div>
+      <div class="hint2" id="hint2">Davam etmək üçün sürüşdürün</div>
+    </div>
+  </section>
+
+  <section class="sec cream">
+    <div class="wrap">
+      <p class="label">Əziz qonaqlarımız</p>
+      <div class="names-hero">İlkin<span class="amp">və</span>Samira</div>
+      <div class="ornament" aria-hidden="true"><svg><use href="#star"/></svg></div>
+      <p class="lead">Həyatımızın ən xoşbəxt gününü sizinlə bölüşmək istəyirik. Toy mərasimimizdə iştirakınız bizim üçün böyük şərəf olacaq.</p>
+    </div>
+  </section>
+
+  <div class="band b" aria-hidden="true"></div>
+  <section class="sec navy">
+    <div class="wrap">
+      <p class="label">Toy günü</p>
+      <h2>Şənbə, 19 dekabr</h2>
+      <p class="date-big">2026 · saat 18:00</p>
+      <div class="ornament" aria-hidden="true"><svg><use href="#star"/></svg></div>
+      <p class="label">Toya qalıb</p>
+      <div class="countdown">
+        <div class="cd"><b id="cd-d">00</b><small>gün</small></div>
+        <div class="cd"><b id="cd-h">00</b><small>saat</small></div>
+        <div class="cd"><b id="cd-m">00</b><small>dəqiqə</small></div>
+        <div class="cd"><b id="cd-s">00</b><small>saniyə</small></div>
+      </div>
+    </div>
+  </section>
+  <div class="band c" aria-hidden="true"></div>
+
+  <section class="sec paper">
+    <div class="wrap">
+      <p class="label">Gecənin axışı</p>
+      <h2>Proqram</h2>
+      <div class="ornament" aria-hidden="true"><svg><use href="#star"/></svg></div>
+      <ol class="timeline">
+        <li><time>18:00</time><span>Qonaqların qarşılanması</span></li>
+        <li><time>19:00</time><span>Bəy və gəlinin salona girişi</span></li>
+        <li><time>19:30</time><span>Şam yeməyi və canlı musiqi</span></li>
+        <li><time>21:30</time><span>Toy tortu</span></li>
+        <li><time>23:00</time><span>Gecənin sonu</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="band d" aria-hidden="true"></div>
+  <section class="sec sand">
+    <div class="wrap">
+      <p class="label">Ünvan</p>
+      <h2>Harada?</h2>
+      <div class="frame">
+        <span class="corner tl"><svg><use href="#corner"/></svg></span>
+        <span class="corner tr"><svg><use href="#corner"/></svg></span>
+        <span class="corner bl"><svg><use href="#corner"/></svg></span>
+        <span class="corner br"><svg><use href="#corner"/></svg></span>
+        <div class="wrap" style="gap:14px">
+          <p class="venue">Gülüstan Sarayı</p>
+          <p>Bakı şəhəri, Bayıl qəsəbəsi</p>
+          <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=G%C3%BCl%C3%BCstan+Saray%C4%B1+Bak%C4%B1" target="_blank" rel="noopener">Xəritədə aç</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="band e" aria-hidden="true"></div>
+  <section class="sec red">
+    <div class="wrap">
+      <p class="label">Cavabınızı gözləyirik</p>
+      <h2>Gələcəksiniz?</h2>
+      <div class="frame">
+        <span class="corner tl"><svg><use href="#corner"/></svg></span>
+        <span class="corner tr"><svg><use href="#corner"/></svg></span>
+        <span class="corner bl"><svg><use href="#corner"/></svg></span>
+        <span class="corner br"><svg><use href="#corner"/></svg></span>
+        <form id="rsvp">
+          <label for="name">Adınız</label>
+          <input id="name" name="name" type="text" placeholder="Məs. Leyla Məmmədova" required>
+          <span class="field-title" id="come-label">İştirak</span>
+          <div class="choice" role="radiogroup" aria-labelledby="come-label">
+            <label for="yes"><input id="yes" type="radio" name="come" value="Gələcəm" checked> Gələcəm</label>
+            <label for="no"><input id="no" type="radio" name="come" value="Gələ bilməyəcəm"> Gələ bilmərəm</label>
+          </div>
+          <label for="count">Neçə nəfər?</label>
+          <select id="count" name="count">
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+          </select>
+          <button class="btn" type="submit">Cavabı hazırla</button>
+          <p class="note" id="rsvp-note">Cavabınız WhatsApp mesajı kimi açılacaq.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+  <div class="band f" aria-hidden="true"></div>
+
+  <footer>
+    <div class="ornament" style="margin:0 auto 18px" aria-hidden="true"><svg><use href="#star"/></svg></div>
+    <div class="names">İlkin &amp; Samira</div>
+    <p>Sizi gözləyirik</p>
+  </footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
+<script>
+(() => {
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const seg = (p, a, b) => clamp((p - a) / (b - a), 0, 1);
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const easeS = t => .5 - .5 * Math.cos(Math.PI * t);
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const $ = id => document.getElementById(id);
+
+  const stage = document.querySelector('.stage');
+  const chest = $('chest'), back = $('back'), front = $('front');
+  const rim = $('rim'), shade = $('shade'), lid3d = $('lid3d'), lidbox = $('lidbox');
+  const fTop = $('fTop'), fInner = $('fInner'), fFront = $('fFront');
+  const dim = $('dim'), hint = $('hint'), hint2 = $('hint2');
+  const rugShadow = $('rugShadow'), designBg = $('designBg'), sticky = document.querySelector('.sticky');
+  const RUG_AR = 2528 / 1696;
+
+  // ---- Rug cloth (three.js). Units: 1 world unit = 1 CSS px on the z=0 plane, y up. ----
+  const SX = 24, SY = 48;
+  let gl = null;
+  try {
+    const canvas = $('rugGL');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(30, 1, 1, 20000);
+    const geo = new THREE.PlaneGeometry(1, 1, SX, SY);
+    geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(geo.attributes.position.count * 3), 3));
+    const tex = new THREE.TextureLoader().load('rug.webp');
+    tex.encoding = THREE.sRGBEncoding;
+    tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    const texB = new THREE.TextureLoader().load('rug-back.webp');
+    texB.encoding = THREE.sRGBEncoding;
+    texB.anisotropy = tex.anisotropy;
+    const mesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ map: tex, vertexColors: true, side: THREE.FrontSide }));
+    const meshB = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ map: texB, vertexColors: true, side: THREE.BackSide }));
+    scene.add(mesh, meshB);
+    gl = { canvas, renderer, scene, camera, geo, mesh, meshB, vw: 0, vh: 0 };
+  } catch (err) { gl = null; }
+  if (!gl) document.getElementById('rug').style.visibility = 'visible';
+
+  const LIGHT = (() => { const x = .25, y = .55, z = 1, n = Math.hypot(x, y, z); return [x / n, y / n, z / n]; })();
+  const smooth = t => t * t * (3 - 2 * t);
+
+  // Place every vertex: cloth rising out of the slot with its top curling toward the viewer,
+  // blended toward a flat sheet that covers the whole screen.
+  function drawRug(o) {
+    const { vw, vh, slotX, slotY, w0, h0, emerged, curl, sag, flat, time, show, tL, tT, tW, tH, flip } = o;
+    const g = gl;
+    if (g.vw !== vw || g.vh !== vh) {
+      g.renderer.setSize(vw, vh, false);
+      g.canvas.style.width = vw + 'px'; g.canvas.style.height = vh + 'px';
+      const D = vh * 1.15;
+      g.camera.position.set(0, 0, D);
+      g.camera.fov = 2 * Math.atan(vh / 2 / D) * 180 / Math.PI;
+      g.camera.aspect = vw / vh; g.camera.updateProjectionMatrix();
+      g.vw = vw; g.vh = vh;
+    }
+    g.mesh.visible = g.meshB.visible = show;
+    if (!show) { g.renderer.render(g.scene, g.camera); return; }
+
+
+    const pos = g.geo.attributes.position, col = g.geo.attributes.color;
+    const X0 = slotX - vw / 2, Y0 = vh / 2 - slotY;
+    const rowY = new Float32Array(SY + 1), rowZ = new Float32Array(SY + 1), rowT = new Float32Array(SY + 1);
+    const ds = h0 / SY;
+    for (let iy = 0; iy <= SY; iy++) {
+      const t = emerged - iy * ds;            // distance above the slot along the cloth
+      rowT[iy] = t;
+      if (t <= 0) { rowY[iy] = Y0 - 3; rowZ[iy] = 0; continue; }   // still inside the chest
+      let y = Y0, z = 0;
+      const steps = Math.max(1, Math.ceil(t / ds));
+      const st = t / steps;
+      for (let k = 0; k < steps; k++) {
+        const tt = (k + .5) * st;
+        const f = tt / Math.max(emerged, 1);
+        const a = curl * Math.pow(f, 2.2) + Math.sin(tt / 90 - time * 1.6) * .06 * f;
+        y += Math.cos(a) * st; z += Math.sin(a) * st;
+      }
+      rowY[iy] = y; rowZ[iy] = z;
+    }
+    const rowA = new Float32Array(SY + 1);
+    for (let iy = 0; iy <= SY; iy++) rowA[iy] = Math.PI * easeS(clamp(flip * 1.55 - (iy / SY) * .55, 0, 1));
+    let i = 0;
+    for (let iy = 0; iy <= SY; iy++) {
+      for (let ix = 0; ix <= SX; ix++, i++) {
+        const u = ix / SX;
+        const bulge = Math.sin(Math.PI * u) * sag * smooth(clamp(rowT[iy] / 80, 0, 1));
+        const cxp = X0 + (u - .5) * w0, cyp = rowY[iy], czp = rowZ[iy] + bulge;
+        let fx = tL + u * tW - vw / 2, fy = vh / 2 - (tT + (iy / SY) * tH), fz = 0;
+        if (flip > 0) {
+          // card-style twist: the top turns first, the bottom follows, and the cloth flexes as it goes
+          const th = rowA[iy], xl = (u - .5) * tW;
+          fx = tL + tW / 2 - vw / 2 + Math.cos(th) * xl;
+          fz = -Math.sin(th) * xl + Math.sin(th) * tW * .07 * Math.sin(Math.PI * u) + Math.sin(Math.PI * flip) * tW * .12;
+        }
+        pos.setXYZ(i, lerp(cxp, fx, flat), lerp(cyp, fy, flat), lerp(czp, fz, flat));
+      }
+    }
+    pos.needsUpdate = true;
+    g.geo.computeVertexNormals();
+    const nrm = g.geo.attributes.normal;
+    i = 0;
+    for (let iy = 0; iy <= SY; iy++) {
+      // shadow cast by the chest's front wall near the slot
+      const occl = .55 + .45 * smooth(clamp(rowT[iy] / 70, 0, 1));
+      for (let ix = 0; ix <= SX; ix++, i++) {
+        const d = Math.abs(nrm.getX(i) * LIGHT[0] + nrm.getY(i) * LIGHT[1] + nrm.getZ(i) * LIGHT[2]);
+        let b = Math.min(1.05, .3 + .78 * d) * occl;
+        b = lerp(b, lerp(1, Math.min(1.04, .5 + .56 * d), Math.sin(Math.PI * flip)), flat);
+        col.setXYZ(i, b, b, b);
+      }
+    }
+    col.needsUpdate = true;
+    g.renderer.render(g.scene, g.camera);
+    let m = 0; for (let iy = 0; iy <= SY; iy++) m += Math.abs(Math.cos(rowA[iy]));
+    return m / (SY + 1);
+  }
+
+  // Lid geometry in photo pixels (photo is 1536 wide). Camera looks down at E degrees.
+  const E = 17.9, LID_W = 955, LID_D = 326, LID_T = 53.6, HINGE_X = 290, HINGE_Y = 406;
+  let lastW = 0;
+  function layoutLid(W) {
+    const k = W / 1536, w = LID_W * k, d = LID_D * k, t = LID_T * k;
+    lid3d.style.perspective = `${W * 4.79}px`;
+    Object.assign(lidbox.style, { left: `${HINGE_X * k}px`, top: `${HINGE_Y * k}px`, width: `${w}px`, height: `${d}px` });
+    for (const f of [fTop, fInner]) Object.assign(f.style, { width: `${w}px`, height: `${d}px` });
+    fTop.style.transform = `translateZ(${t}px)`;
+    fInner.style.transform = 'rotateY(180deg)';
+    Object.assign(fFront.style, { top: `${d}px`, width: `${w}px`, height: `${t}px`, transform: `translateZ(${t}px) rotateX(-90deg)` });
+  }
+
+  let ps = 0, lastT = performance.now();
+  function frame(now = performance.now()) {
+    const dt = Math.min(.05, (now - lastT) / 1000); lastT = now;
+    const r = stage.getBoundingClientRect();
+    const target = clamp(-r.top / (r.height - innerHeight), 0, 1);
+    ps += (target - ps) * (1 - Math.exp(-dt * 7));   // frame-rate independent smoothing
+    if (Math.abs(target - ps) < .0003) ps = target;
+    const p = ps;
+    const vw = innerWidth, vh = innerHeight;
+    const C = chest.getBoundingClientRect(), S = sticky.getBoundingClientRect();
+    const W = C.width, H = C.height;
+    if (W !== lastW) { layoutLid(W); lastW = W; }
+
+    // Equal shares of the scroll for each step, gentle sine easing so the pace stays even.
+    // 1. Lid swings open on its back hinge
+    const th = 98 * easeS(seg(p, 0, .13));
+    lidbox.style.transform = `rotateX(${90 - E + th}deg)`;
+    fTop.style.setProperty('--shade', (seg(th, 0, 70) * .35).toFixed(3));
+    fFront.style.setProperty('--shade', (seg(th, 0, 60) * .45).toFixed(3));
+    fInner.style.setProperty('--shade', ((1 - seg(th, 20, 95)) * .6).toFixed(3));
+    rim.style.opacity = 1 - seg(th, 0, 14);
+    shade.style.opacity = 1 - seg(th, 0, 90);
+
+    // 2. Rug is pulled up out of the chest; its top curls toward the viewer
+    const c1 = easeS(seg(p, .13, .38));
+    // 3. Rug flattens and settles into the framed composition, chest fades away
+    const c2 = easeS(seg(p, .38, .52));
+    // 4. The rug twists over like a card: names -> wish
+    const flip = seg(p, .58, .82);
+
+    const w0 = Math.min(.42 * W, .6 * innerHeight / RUG_AR), h0 = w0 * RUG_AR;
+    const rimY0 = C.top + .494 * H;
+    // lower the chest only as much as needed for the whole rug to fit above it
+    const need = clamp(h0 * .97 + 26 - rimY0, 0, vh * .45);
+    const drop = need * easeS(seg(p, .2, .38));
+    const rimY = rimY0 + drop;
+
+    // rug rectangle in the framed composition (same proportions as the design)
+    const cw = Math.min(vw * .80, vh * .70 / RUG_AR), ch = cw * RUG_AR;
+    const cl = (vw - cw) / 2, ct = (vh - ch) / 2;
+
+    let spread = 1;
+    if (gl) {
+      gl.canvas.style.left = `${S.left - C.left}px`; gl.canvas.style.top = `${S.top - C.top}px`;
+      spread = drawRug({
+        vw, vh, slotX: C.left - S.left + .5 * W, slotY: rimY - S.top, w0, h0,
+        emerged: h0 * c1,
+        curl: (115 * Math.pow(1 - c1, .8) + 12) * Math.PI / 180 * (1 - c2),
+        sag: w0 * .09 * (1 - c2),
+        flat: c2, time: performance.now() / 1000, show: c1 > 0,
+        tL: cl, tT: ct, tW: cw, tH: ch, flip,
+      }) ?? 1;
+    }
+    Object.assign(rugShadow.style, {
+      left: `${cl + S.left - C.left}px`, top: `${ct + S.top - C.top}px`, width: `${cw}px`, height: `${ch}px`,
+      filter: `blur(${cw * .035}px)`,
+      transform: `translate(${cw * .01}px, ${ch * .035}px) scale(${Math.max(.04, spread) * 1.02}, 1.01)`,
+      opacity: c2 * (1 - .35 * Math.sin(Math.PI * flip)),
+    });
+
+    designBg.style.opacity = seg(p, .38, .5);
+    back.style.opacity = 1 - seg(p, .38, .45);
+    front.style.opacity = 1 - Math.min(1, c2 * 3);
+    back.style.transform = front.style.transform = `translateY(${drop + c2 * vh * .08}px)`;
+    hint.style.opacity = 1 - seg(p, 0, .03);
+    hint2.style.opacity = seg(p, .86, .93);
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  // Countdown (Baku time, UTC+4)
+  const target = new Date('2026-12-19T18:00:00+04:00').getTime();
+  const pad = n => String(n).padStart(2, '0');
+  function tick() {
+    let ms = Math.max(0, target - Date.now());
+    const d = Math.floor(ms / 864e5); ms -= d * 864e5;
+    const h = Math.floor(ms / 36e5); ms -= h * 36e5;
+    const m = Math.floor(ms / 6e4); ms -= m * 6e4;
+    $('cd-d').textContent = pad(d); $('cd-h').textContent = pad(h);
+    $('cd-m').textContent = pad(m); $('cd-s').textContent = pad(Math.floor(ms / 1000));
+  }
+  tick(); setInterval(tick, 1000);
+
+  // RSVP via WhatsApp: replace with the hosts' number
+  const PHONE = '994500000000';
+  $('rsvp').addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const msg = `Salam! Mən ${fd.get('name')}. Toy dəvətinə cavabım: ${fd.get('come')}. Nəfər sayı: ${fd.get('count')}.`;
+    const a = document.createElement('a');
+    a.href = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+    a.target = '_blank'; a.rel = 'noopener'; a.className = 'btn'; a.textContent = 'WhatsApp-da göndər';
+    const note = $('rsvp-note'); note.textContent = 'Mesajınız hazırdır.'; note.append(a);
+  });
+})();
+</script>
+</body>
+</html>
