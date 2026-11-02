@@ -223,6 +223,18 @@ footer p { margin: 10px auto 0; color: #cbbfa9; font-size: 15px; letter-spacing:
 .sound svg { width: 20px; height: 20px; }
 html.locked, html.locked body { overflow: hidden; touch-action: none; overscroll-behavior: none; }
 html.locked .sticky { cursor: pointer; }
+html.locked .hint::after { display: none; }
+/* tap marker on the chest's lock */
+.tap { position: absolute; left: 49.9%; top: 48.05%; width: clamp(46px, 5.2%, 72px); aspect-ratio: 1; translate: -50% -50%;
+  pointer-events: none; transition: opacity .35s, scale .35s; }
+.tap::before, .tap::after { content: ""; position: absolute; inset: 0; border-radius: 50%; }
+.tap::after { background: rgba(255,250,240,.32); border: 1.5px solid rgba(255,250,240,.75);
+  box-shadow: 0 0 18px rgba(255,240,210,.35); animation: tapDot 1.8s ease-in-out infinite; }
+.tap::before { border: 1.5px solid rgba(255,250,240,.7); animation: tapRing 1.8s ease-out infinite; }
+@keyframes tapDot { 0%, 100% { transform: scale(.82); } 45% { transform: scale(1); } }
+@keyframes tapRing { 0% { transform: scale(.85); opacity: .9; } 100% { transform: scale(2.1); opacity: 0; } }
+html:not(.locked) .tap, .tap.gone { opacity: 0; scale: .6; }
+@media (prefers-reduced-motion: reduce) { .tap::before, .tap::after { animation: none; } }
 .hint { transition: opacity .4s; }
 .sound .off { display: none; }
 .sound[aria-pressed="false"] .on { display: none; }
@@ -275,6 +287,7 @@ html.locked .sticky { cursor: pointer; }
           <img class="body-front" src="chest-open.webp" alt="" draggable="false">
           <img class="closed-rim" id="rim" src="rim.webp" alt="" draggable="false">
         </div>
+        <div class="tap" id="tap" aria-hidden="true"></div>
       </div>
       <div class="rug" id="rug"><img src="rug.webp" alt="Xalça üzərində İlkin və Samira yazısı" draggable="false"></div>
       <div class="hint" id="hint">Sandığı açmaq üçün toxunun</div>
@@ -622,6 +635,7 @@ html.locked .sticky { cursor: pointer; }
   function openChest(e) {
     if (openedAt || (e && e.target.closest && e.target.closest('#sound'))) return;
     openedAt = performance.now();
+    $('tap').classList.add('gone');
     startMusic();
     setTimeout(() => {
       hint.textContent = 'Davam etmək üçün sürüşdürün';
