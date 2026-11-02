@@ -221,6 +221,7 @@ footer p { margin: 10px auto 0; color: #cbbfa9; font-size: 15px; letter-spacing:
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding: 0;
 }
 .sound svg { width: 20px; height: 20px; }
+html.swipe-lock, html.swipe-lock body { touch-action: none; overscroll-behavior: none; }
 .sound .off { display: none; }
 .sound[aria-pressed="false"] .on { display: none; }
 .sound[aria-pressed="false"] .off { display: block; }
@@ -608,6 +609,31 @@ footer p { margin: 10px auto 0; color: #cbbfa9; font-size: 15px; letter-spacing:
   evts.forEach(e => addEventListener(e, kick, { capture: true, passive: true }));
   addEventListener('scroll', kick, { passive: true });
   startMusic();
+
+  // On phones a native scroll never counts as a "tap", so browsers keep the music blocked.
+  // Until the music starts, the page is moved by our own swipe handling instead; lifting the
+  // finger is then a real tap for the browser, which lets the music begin.
+  if (matchMedia('(pointer: coarse)').matches) {
+    const root = document.documentElement;
+    root.classList.add('swipe-lock');
+    let y0 = 0, s0 = 0, lastY = 0, lastT = 0, vel = 0;
+    const onStart = e => { const t = e.touches[0]; y0 = lastY = t.clientY; s0 = scrollY; lastT = performance.now(); vel = 0; };
+    const onMove = e => {
+      const t = e.touches[0], now = performance.now();
+      vel = (lastY - t.clientY) / Math.max(1, now - lastT); lastY = t.clientY; lastT = now;
+      scrollTo(0, s0 + (y0 - t.clientY));
+    };
+    const onEnd = () => {
+      root.classList.remove('swipe-lock');
+      removeEventListener('touchstart', onStart); removeEventListener('touchmove', onMove); removeEventListener('touchend', onEnd);
+      startMusic();
+      if (Math.abs(vel) > .05) scrollBy({ top: vel * 260, behavior: 'smooth' });   // a little momentum
+    };
+    addEventListener('touchstart', onStart, { passive: true });
+    addEventListener('touchmove', onMove, { passive: true });
+    addEventListener('touchend', onEnd, { passive: true });
+    music.addEventListener('playing', () => root.classList.remove('swipe-lock'), { once: true });
+  }
   soundBtn.addEventListener('click', e => {
     e.stopPropagation();
     if (music.paused) { userMuted = false; music.play().then(() => { setBtn(true); fadeIn(); }).catch(() => {}); }
