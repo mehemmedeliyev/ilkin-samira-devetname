@@ -45,7 +45,7 @@ body {
 
 /* ---------- Stage ---------- */
 .stage { height: 420vh; height: 420svh; position: relative; }
-.sticky { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden; background: #8a705e; }
+.sticky { position: sticky; top: 0; height: 100vh; height: 100lvh; overflow: hidden; background: #8a705e; }
 .dim { position: absolute; inset: 0; background: var(--night); opacity: 0; pointer-events: none; }
 .chest {
   --W: min(140vw, 125vh);
@@ -95,11 +95,11 @@ body {
 .rug-shadow { position: absolute; left: 0; top: 0; opacity: 0; pointer-events: none;
   background: rgba(30,18,10,.55); border-radius: 2%; will-change: transform, opacity; }
 .hint, .hint2 {
-  position: absolute; left: 0; right: 0; bottom: 5vh; text-align: center;
+  position: absolute; left: 0; right: 0; bottom: 5vh; bottom: calc(100lvh - 100dvh + 5svh); text-align: center;
   font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: #fbf3e6;
   text-shadow: 0 1px 4px rgba(0,0,0,.6); pointer-events: none;
 }
-.hint2 { color: #3a2a20; text-shadow: none; bottom: calc(clamp(18px, min(6.6vw, 4.2vh), 46px) * .78 + 8px); }
+.hint2 { color: #3a2a20; text-shadow: none; bottom: calc(clamp(18px, min(6.6vw, 4.2vh), 46px) * .78 + 8px); bottom: calc(100lvh - 100dvh + clamp(18px, min(6.6vw, 4.2vh), 46px) * .78 + 8px); }
 .hint2::after { height: 22px; margin-top: 6px; }
 .hint2::after { background: linear-gradient(#3a2a20, transparent) !important; }
 .hint2 { opacity: 0; }
@@ -505,7 +505,7 @@ footer p { margin: 10px auto 0; color: #cbbfa9; font-size: 15px; letter-spacing:
     ps += (target - ps) * (1 - Math.exp(-dt * 7));   // frame-rate independent smoothing
     if (Math.abs(target - ps) < .0003) ps = target;
     const p = ps;
-    const vw = innerWidth, vh = innerHeight;
+    const vw = innerWidth, vh = sticky.clientHeight || innerHeight;
     const C = chest.getBoundingClientRect(), S = sticky.getBoundingClientRect();
     const W = C.width, H = C.height;
     if (W !== lastW) { layoutLid(W); lastW = W; }
