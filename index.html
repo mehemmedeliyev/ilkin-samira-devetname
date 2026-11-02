@@ -213,7 +213,21 @@ footer p { margin: 10px auto 0; color: #cbbfa9; font-size: 15px; letter-spacing:
   .timeline li { grid-template-columns: 60px 1fr; gap: 30px; }
   .timeline li::before { left: 72px; }
 }
-@media (prefers-reduced-motion: reduce) { .hint::after, .hint2::after { animation: none; } .btn { transition: none; } }
+/* music toggle */
+.sound {
+  position: fixed; z-index: 50; top: calc(14px + env(safe-area-inset-top)); right: calc(14px + env(safe-area-inset-right));
+  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  background: rgba(28,28,36,.55); border: 1px solid rgba(176,141,87,.8); color: #f5efe4;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding: 0;
+}
+.sound svg { width: 20px; height: 20px; }
+.sound .off { display: none; }
+.sound[aria-pressed="false"] .on { display: none; }
+.sound[aria-pressed="false"] .off { display: block; }
+.sound.invite { animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(176,141,87,.6); } 50% { box-shadow: 0 0 0 10px rgba(176,141,87,0); } }
+.sound:focus-visible { outline: 2px solid #b08d57; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .hint::after, .hint2::after { animation: none; } .btn { transition: none; } .sound.invite { animation: none; } }
 </style>
 </head>
 <body>
@@ -362,6 +376,11 @@ footer p { margin: 10px auto 0; color: #cbbfa9; font-size: 15px; letter-spacing:
     <p>Sizi gözləyirik</p>
   </footer>
 </main>
+<audio id="music" src="music.mp3" preload="auto" loop playsinline></audio>
+<button class="sound invite" id="sound" type="button" aria-pressed="false" aria-label="Musiqini aç / bağla">
+  <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+  <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>
+</button>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
 <script>
@@ -567,6 +586,37 @@ footer p { margin: 10px auto 0; color: #cbbfa9; font-size: 15px; letter-spacing:
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
+
+  // Music: starts from 0:00 on load where the browser allows it, otherwise on the guest's first touch.
+  const music = $('music'), soundBtn = $('sound');
+  let userMuted = false, fadeId = 0;
+  function setBtn(on) { soundBtn.setAttribute('aria-pressed', on ? 'true' : 'false'); if (on) soundBtn.classList.remove('invite'); }
+  function fadeIn() {
+    cancelAnimationFrame(fadeId); music.volume = 0;
+    const t0 = performance.now();
+    const step = now => { music.volume = Math.min(1, (now - t0) / 1500); if (music.volume < 1) fadeId = requestAnimationFrame(step); };
+    fadeId = requestAnimationFrame(step);
+  }
+  function startMusic() {
+    if (userMuted || !music.paused) return;
+    const pr = music.play();
+    if (pr && pr.then) pr.then(() => { setBtn(true); fadeIn(); unbind(); }).catch(() => {});
+  }
+  const kick = e => { if (e && e.target && e.target.closest && e.target.closest('#sound')) return; startMusic(); };
+  const evts = ['pointerdown', 'touchend', 'click', 'keydown'];
+  function unbind() { evts.forEach(e => removeEventListener(e, kick, true)); }
+  evts.forEach(e => addEventListener(e, kick, { capture: true, passive: true }));
+  addEventListener('scroll', kick, { passive: true });
+  startMusic();
+  soundBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    if (music.paused) { userMuted = false; music.play().then(() => { setBtn(true); fadeIn(); }).catch(() => {}); }
+    else { userMuted = true; music.pause(); setBtn(false); soundBtn.classList.remove('invite'); }
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) music.pause();
+    else if (!userMuted && soundBtn.getAttribute('aria-pressed') === 'true') music.play().catch(() => {});
+  });
 
   // Countdown (Baku time, UTC+4)
   const target = new Date('2026-12-19T18:00:00+04:00').getTime();
