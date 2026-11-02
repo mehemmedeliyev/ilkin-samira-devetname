@@ -224,6 +224,11 @@ footer p { margin: 10px auto 0; color: #cbbfa9; font-size: 15px; letter-spacing:
 html.locked, html.locked body { overflow: hidden; touch-action: none; overscroll-behavior: none; }
 html.locked .sticky { cursor: pointer; }
 html.locked .hint::after { display: none; }
+/* first prompt sits just above the closed chest */
+.hint-top { position: absolute; left: 50%; top: 27%; translate: -50% -100%; white-space: nowrap; pointer-events: none;
+  font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: #fbf3e6; text-shadow: 0 1px 4px rgba(0,0,0,.5);
+  transition: opacity .4s; }
+html:not(.locked) .hint-top, .hint-top.gone { opacity: 0; visibility: hidden; transition: opacity .4s, visibility 0s .4s; }
 /* tap marker on the chest's lock */
 .tap { position: absolute; left: 49.9%; top: 48.05%; width: clamp(46px, 5.2%, 72px); aspect-ratio: 1; translate: -50% -50%;
   pointer-events: none; transition: opacity .35s, scale .35s; }
@@ -288,9 +293,10 @@ html:not(.locked) .tap, .tap.gone { opacity: 0; scale: .6; }
           <img class="closed-rim" id="rim" src="rim.webp" alt="" draggable="false">
         </div>
         <div class="tap" id="tap" aria-hidden="true"></div>
+        <div class="hint-top" id="hintTop">Sandığı açmaq üçün toxunun</div>
       </div>
       <div class="rug" id="rug"><img src="rug.webp" alt="Xalça üzərində İlkin və Samira yazısı" draggable="false"></div>
-      <div class="hint" id="hint">Sandığı açmaq üçün toxunun</div>
+      <div class="hint" id="hint" style="opacity:0">Davam etmək üçün sürüşdürün</div>
       <div class="hint2" id="hint2">Davam etmək üçün sürüşdürün</div>
     </div>
   </section>
@@ -597,7 +603,7 @@ html:not(.locked) .tap, .tap.gone { opacity: 0; scale: .6; }
     back.style.opacity = 1 - seg(p, .38, .45);
     front.style.opacity = 1 - Math.min(1, c2 * 3);
     back.style.transform = front.style.transform = `translateY(${drop + c2 * vh * .08}px)`;
-    hint.style.opacity = openedAt ? (lidT < 1 ? 0 : 1 - seg(ps, 0, .03)) : 1;
+    hint.style.opacity = openedAt && lidT >= 1 ? 1 - seg(ps, 0, .03) : 0;
     hint2.style.opacity = seg(p, .86, .93);
 
     requestAnimationFrame(frame);
@@ -630,15 +636,14 @@ html:not(.locked) .tap, .tap.gone { opacity: 0; scale: .6; }
   // (a tap is what browsers require before sound may play); then scrolling takes over.
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   scrollTo(0, 0);
-  if (!matchMedia('(pointer: coarse)').matches) hint.textContent = 'Sandığı açmaq üçün klikləyin';
+  if (!matchMedia('(pointer: coarse)').matches) $('hintTop').textContent = 'Sandığı açmaq üçün klikləyin';
   const sticky0 = document.querySelector('.sticky');
   function openChest(e) {
     if (openedAt || (e && e.target.closest && e.target.closest('#sound'))) return;
     openedAt = performance.now();
-    $('tap').classList.add('gone');
+    $('tap').classList.add('gone'); $('hintTop').classList.add('gone');
     startMusic();
     setTimeout(() => {
-      hint.textContent = 'Davam etmək üçün sürüşdürün';
       document.documentElement.classList.remove('locked');
     }, 1300);
   }
