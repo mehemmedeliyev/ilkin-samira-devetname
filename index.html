@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="az" class="locked">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,7 +44,7 @@ body {
 }
 
 /* ---------- Stage ---------- */
-.stage { height: 420vh; height: 420svh; position: relative; }
+.stage { height: 380vh; height: 380svh; position: relative; }
 .sticky { position: sticky; top: 0; height: 100vh; height: 100lvh; overflow: hidden; background: #8a705e; }
 .dim { position: absolute; inset: 0; background: var(--night); opacity: 0; pointer-events: none; }
 .chest {
@@ -221,7 +221,9 @@ footer p { margin: 10px auto 0; color: #cbbfa9; font-size: 15px; letter-spacing:
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding: 0;
 }
 .sound svg { width: 20px; height: 20px; }
-html.swipe-lock, html.swipe-lock body { touch-action: none; overscroll-behavior: none; }
+html.locked, html.locked body { overflow: hidden; touch-action: none; overscroll-behavior: none; }
+html.locked .sticky { cursor: pointer; }
+.hint { transition: opacity .4s; }
 .sound .off { display: none; }
 .sound[aria-pressed="false"] .on { display: none; }
 .sound[aria-pressed="false"] .off { display: block; }
@@ -275,7 +277,7 @@ html.swipe-lock, html.swipe-lock body { touch-action: none; overscroll-behavior:
         </div>
       </div>
       <div class="rug" id="rug"><img src="rug.webp" alt="Xalça üzərində İlkin və Samira yazısı" draggable="false"></div>
-      <div class="hint" id="hint">Sandığı açmaq üçün aşağı sürüşdürün</div>
+      <div class="hint" id="hint">Sandığı açmaq üçün toxunun</div>
       <div class="hint2" id="hint2">Davam etmək üçün sürüşdürün</div>
     </div>
   </section>
@@ -517,14 +519,14 @@ html.swipe-lock, html.swipe-lock body { touch-action: none; overscroll-behavior:
     Object.assign(fFront.style, { top: `${d}px`, width: `${w}px`, height: `${t}px`, transform: `translateZ(${t}px) rotateX(-90deg)` });
   }
 
-  let ps = 0, lastT = performance.now();
+  let ps = 0, lastT = performance.now(), openedAt = 0;
   function frame(now = performance.now()) {
     const dt = Math.min(.05, (now - lastT) / 1000); lastT = now;
     const r = stage.getBoundingClientRect();
     const target = clamp(-r.top / (r.height - innerHeight), 0, 1);
     ps += (target - ps) * (1 - Math.exp(-dt * 7));   // frame-rate independent smoothing
     if (Math.abs(target - ps) < .0003) ps = target;
-    const p = ps;
+    const p = .13 + ps * .87;
     const vw = innerWidth, vh = sticky.clientHeight || innerHeight;
     const C = chest.getBoundingClientRect(), S = sticky.getBoundingClientRect();
     const W = C.width, H = C.height;
@@ -532,7 +534,8 @@ html.swipe-lock, html.swipe-lock body { touch-action: none; overscroll-behavior:
 
     // Equal shares of the scroll for each step, gentle sine easing so the pace stays even.
     // 1. Lid swings open on its back hinge
-    const th = 98 * easeS(seg(p, 0, .13));
+    const lidT = openedAt ? clamp((performance.now() - openedAt) / 1300, 0, 1) : 0;
+    const th = 98 * easeS(lidT);
     lidbox.style.transform = `rotateX(${90 - E + th}deg)`;
     fTop.style.setProperty('--shade', (seg(th, 0, 70) * .35).toFixed(3));
     fFront.style.setProperty('--shade', (seg(th, 0, 60) * .45).toFixed(3));
@@ -581,7 +584,7 @@ html.swipe-lock, html.swipe-lock body { touch-action: none; overscroll-behavior:
     back.style.opacity = 1 - seg(p, .38, .45);
     front.style.opacity = 1 - Math.min(1, c2 * 3);
     back.style.transform = front.style.transform = `translateY(${drop + c2 * vh * .08}px)`;
-    hint.style.opacity = 1 - seg(p, 0, .03);
+    hint.style.opacity = openedAt ? (lidT < 1 ? 0 : 1 - seg(ps, 0, .03)) : 1;
     hint2.style.opacity = seg(p, .86, .93);
 
     requestAnimationFrame(frame);
@@ -610,30 +613,23 @@ html.swipe-lock, html.swipe-lock body { touch-action: none; overscroll-behavior:
   addEventListener('scroll', kick, { passive: true });
   startMusic();
 
-  // On phones a native scroll never counts as a "tap", so browsers keep the music blocked.
-  // Until the music starts, the page is moved by our own swipe handling instead; lifting the
-  // finger is then a real tap for the browser, which lets the music begin.
-  if (matchMedia('(pointer: coarse)').matches) {
-    const root = document.documentElement;
-    root.classList.add('swipe-lock');
-    let y0 = 0, s0 = 0, lastY = 0, lastT = 0, vel = 0;
-    const onStart = e => { const t = e.touches[0]; y0 = lastY = t.clientY; s0 = scrollY; lastT = performance.now(); vel = 0; };
-    const onMove = e => {
-      const t = e.touches[0], now = performance.now();
-      vel = (lastY - t.clientY) / Math.max(1, now - lastT); lastY = t.clientY; lastT = now;
-      scrollTo(0, s0 + (y0 - t.clientY));
-    };
-    const onEnd = () => {
-      root.classList.remove('swipe-lock');
-      removeEventListener('touchstart', onStart); removeEventListener('touchmove', onMove); removeEventListener('touchend', onEnd);
-      startMusic();
-      if (Math.abs(vel) > .05) scrollBy({ top: vel * 260, behavior: 'smooth' });   // a little momentum
-    };
-    addEventListener('touchstart', onStart, { passive: true });
-    addEventListener('touchmove', onMove, { passive: true });
-    addEventListener('touchend', onEnd, { passive: true });
-    music.addEventListener('playing', () => root.classList.remove('swipe-lock'), { once: true });
+  // The page starts locked on the closed chest. A tap opens the lid and starts the music
+  // (a tap is what browsers require before sound may play); then scrolling takes over.
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  scrollTo(0, 0);
+  if (!matchMedia('(pointer: coarse)').matches) hint.textContent = 'Sandığı açmaq üçün klikləyin';
+  const sticky0 = document.querySelector('.sticky');
+  function openChest(e) {
+    if (openedAt || (e && e.target.closest && e.target.closest('#sound'))) return;
+    openedAt = performance.now();
+    startMusic();
+    setTimeout(() => {
+      hint.textContent = 'Davam etmək üçün sürüşdürün';
+      document.documentElement.classList.remove('locked');
+    }, 1300);
   }
+  sticky0.addEventListener('click', openChest);
+  addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openChest(); });
   soundBtn.addEventListener('click', e => {
     e.stopPropagation();
     if (music.paused) { userMuted = false; music.play().then(() => { setBtn(true); fadeIn(); }).catch(() => {}); }
