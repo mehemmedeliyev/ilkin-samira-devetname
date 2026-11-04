@@ -161,6 +161,8 @@ p { margin: 0; max-width: 56ch; }
 .date-block .time { font-family: var(--s-didone); font-size: clamp(30px, 6vw, 42px); line-height: 1; }
 .date-block .row { width: 100%; display: grid; grid-template-columns: 1fr auto 1.6fr auto 1.2fr; align-items: center;
   border-block: 1.5px solid var(--s-line); padding: 14px 0; font-family: var(--s-didone); font-size: clamp(34px, 8.4vw, 58px); line-height: 1; letter-spacing: .02em; }
+.date-block .row { column-gap: clamp(12px, 3.5vw, 26px); }
+.date-block .row span:nth-child(3) { font-size: .68em; letter-spacing: .08em; }
 .date-block .row i { width: 1.5px; height: 1.25em; background: var(--s-line); }
 .date-block .day { font-family: var(--s-serif); font-size: 14px; letter-spacing: .3em; text-transform: uppercase; color: var(--s-soft); }
 
@@ -306,8 +308,8 @@ html:not(.locked) .tap, .tap.gone { opacity: 0; scale: .6; }
   <div class="sections">
   <section class="sec cream">
     <div class="wrap">
-      <p class="label">Əziz qonaqlarımız</p>
       <div class="names-hero">İlkin<span class="amp">və</span>Samira</div>
+      <p class="label">Əziz qonaqlarımız</p>
       <div class="ornament" aria-hidden="true"><svg><use href="#star"/></svg></div>
       <p class="lead">Həyatımızın ən xoşbəxt gününü sizinlə bölüşmək istəyirik. Toy mərasimimizdə iştirakınız bizim üçün böyük şərəf olacaq.</p>
     </div>
